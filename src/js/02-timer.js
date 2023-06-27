@@ -1,6 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-
+import Notiflix from 'notiflix'
 const startBtn = document.querySelector('[data-start]');
 const daysEl = document.querySelector('[data-days]');
 const hoursEl = document.querySelector('[data-hours]');
@@ -21,9 +21,10 @@ flatpickr('#datetime-picker', {
     selectedDate = selectedDates[0];
     if (selectedDate > currentDate) {
       startBtn.disabled = false;
+      Notiflix.Notify.info("Ви зробили правильний вибір");
     } else {
       startBtn.disabled = true;
-      window.alert("Please choose a date in the future");
+      Notiflix.Notify.failure("Ой, але ця дата вже минула");
     };
   },
 });
