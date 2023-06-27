@@ -2,22 +2,24 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const startBtn = document.querySelector('[data-start]');
-startBtn.style.fontSize = "20px";
-startBtn.style.borderRadius = '10px'
-const days = document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
+const daysEl = document.querySelector('[data-days]');
+const hoursEl = document.querySelector('[data-hours]');
+const minutesEl = document.querySelector('[data-minutes]');
+const secondsEl = document.querySelector('[data-seconds]');
+
+let timerId = null;
+let selectedDate = null;
 
 startBtn.disabled = true;
-const fp = flatpickr('#datetime-picker', {
+flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
     const currentDate = new Date();
-    if (selectedDates[0] > currentDate) {
+    selectedDate = selectedDates[0];
+    if (selectedDate > currentDate) {
       startBtn.disabled = false;
     } else {
       startBtn.disabled = true;
@@ -25,13 +27,27 @@ const fp = flatpickr('#datetime-picker', {
     };
   },
 });
-startBtn.addEventListener('click', startTimer)
+startBtn.addEventListener('click', startTimer);
+
 function startTimer() {
-  setInterval(() => {
-    const countdown = fp.selectedDates[0] - Date.now();
-    const timeComponents = convertMs(countdown);
-    timerFace(timeComponents);
+  timerId = setInterval(() => {
+    const countdown = selectedDate - Date.now();
+    
+    if (countdown > 0) {
+      const timeComponents = convertMs(countdown);
+
+        daysEl.innerHTML = addLeadingZero(timeComponents.days);
+        hoursEl.innerHTML = addLeadingZero(timeComponents.hours);
+        minutesEl.innerHTML = addLeadingZero(timeComponents.minutes);
+        secondsEl.innerHTML = addLeadingZero(timeComponents.seconds);
+    } else {
+      clearInterval(timerId)
+    };
   }, 1000);
+};
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, 0);
 };
 
 function convertMs(ms) {
@@ -47,14 +63,19 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 };
-function addLeadingZero(value) {
-  return String(value).padStart(2, 0);
-};
-function timerFace({ days, hours, minutes, seconds }) {
-  days.textContent = addLeadingZero(days);
-  hours.textContent = addLeadingZero(hours);
-  minutes.textContent = addLeadingZero(minutes);
-  seconds.textContent = addLeadingZero(seconds);
-}
+
+const watch = document.querySelector(".timer");
+watch.style.display = 'flex';
+daysEl.style.display = 'grid';
+hoursEl.style.display = 'grid';
+minutesEl.style.display = 'grid';
+secondsEl.style.display = 'grid';
+daysEl.style.fontSize = '40px';
+hoursEl.style.fontSize = '40px';
+minutesEl.style.fontSize = '40px';
+secondsEl.style.fontSize = '40px';
+daysEl.style.marginRight = '10px';
+hoursEl.style.marginRight = '10px';
+minutesEl.style.marginRight = '30px';
 
 
