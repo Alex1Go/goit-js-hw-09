@@ -1,6 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import Notiflix from 'notiflix'
+import Notiflix from 'notiflix';
+
 const startBtn = document.querySelector('[data-start]');
 const daysEl = document.querySelector('[data-days]');
 const hoursEl = document.querySelector('[data-hours]');
@@ -19,6 +20,7 @@ flatpickr('#datetime-picker', {
   onClose(selectedDates) {
     const currentDate = new Date();
     selectedDate = selectedDates[0];
+
     if (selectedDate > currentDate) {
       startBtn.disabled = false;
       Notiflix.Notify.info("Ви зробили правильний вибір");
@@ -28,6 +30,7 @@ flatpickr('#datetime-picker', {
     };
   },
 });
+
 startBtn.addEventListener('click', startTimer);
 
 function startTimer() {
@@ -67,16 +70,22 @@ function convertMs(ms) {
 
 const watch = document.querySelector(".timer");
 watch.style.display = 'flex';
-daysEl.style.display = 'grid';
-hoursEl.style.display = 'grid';
-minutesEl.style.display = 'grid';
-secondsEl.style.display = 'grid';
-daysEl.style.fontSize = '40px';
-hoursEl.style.fontSize = '40px';
-minutesEl.style.fontSize = '40px';
-secondsEl.style.fontSize = '40px';
-daysEl.style.marginRight = '10px';
-hoursEl.style.marginRight = '10px';
-minutesEl.style.marginRight = '30px';
 
+const fieldEls = document.querySelectorAll('.field');
+fieldEls.forEach(fieldEl => {
+  fieldEl.style.textAlign = 'center';
+  fieldEl.style.marginRight = '10px';
+});
 
+const valueEls = document.querySelectorAll('.value');
+valueEls.forEach(valueEl => {
+  valueEl.style.fontSize = '40px';
+  valueEl.style.display = 'grid';
+});
+
+const labelEls = document.querySelectorAll('.label');
+labelEls.forEach(labelEl => {
+  labelEl.style.fontFamily = 'Roboto';
+  labelEl.style.textTransform = 'uppercase';
+  labelEl.style.fontSize = '12px';
+});

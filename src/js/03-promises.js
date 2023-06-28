@@ -1,8 +1,14 @@
 import Notiflix from 'notiflix';
 const form = document.querySelector('.form');
 form.addEventListener('submit', onFormSubmit);
+
 function onFormSubmit(evt) {
   evt.preventDefault();
+  const { delay, step, amount } = evt.target.elements;
+  delay.value;
+  step.value;
+  amount.value;
+
   for (let i = 1; i <= amount; i += 1) {
     createPromise(i, delay)
     .then(({ position, delay }) => {
