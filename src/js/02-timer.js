@@ -12,6 +12,7 @@ let timerId = null;
 let selectedDate = null;
 
 startBtn.disabled = true;
+
 flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
@@ -34,6 +35,7 @@ flatpickr('#datetime-picker', {
 startBtn.addEventListener('click', startTimer);
 
 function startTimer() {
+  startBtn.disabled = true;
   timerId = setInterval(() => {
     const countdown = selectedDate - Date.now();
     
