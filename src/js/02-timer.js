@@ -35,10 +35,10 @@ flatpickr('#datetime-picker', {
 startBtn.addEventListener('click', startTimer);
 
 function startTimer() {
-  startBtn.disabled = true;
+  
   timerId = setInterval(() => {
     const countdown = selectedDate - Date.now();
-    
+    startBtn.disabled = true;
     if (countdown > 0) {
       const timeComponents = convertMs(countdown);
 
