@@ -3,7 +3,8 @@ function getRandomHexColor() {
 }
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
-let changeColor = null
+let changeColor = null;
+stopBtn.disabled = true;
 startBtn.addEventListener('click', () => {
     changeColor = setInterval(() => { document.body.style.backgroundColor = getRandomHexColor() }, 1000);
    if (startBtn) {
