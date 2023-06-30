@@ -21,7 +21,6 @@ flatpickr('#datetime-picker', {
   onClose(selectedDates) {
     const currentDate = new Date();
     selectedDate = selectedDates[0];
-
     if (selectedDate > currentDate) {
       startBtn.disabled = false;
       Notiflix.Notify.info("Ви зробили правильний вибір");
